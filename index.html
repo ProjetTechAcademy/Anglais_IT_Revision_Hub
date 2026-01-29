@@ -11,7 +11,7 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     
-    <!-- Chosen Palette: Warm Neutrals & Calm Harmony -->
+    <!-- Palette de couleurs choisie : Neutres chauds et harmonie calme -->
     <script>
         tailwind.config = {
             theme: {
@@ -66,11 +66,28 @@
             height: 18px;
             cursor: pointer;
         }
+        .session-done {
+            opacity: 0.6;
+            text-decoration: line-through;
+            text-decoration-color: #C27B7F;
+        }
+        /* Effet de lueur pour le bloc informatif */
+        .info-glow {
+            box-shadow: 0 0 20px rgba(141, 163, 153, 0.15);
+            border: 2px solid rgba(141, 163, 153, 0.3);
+        }
+        input, select {
+            border: 1px solid #E6E2DD;
+            background: white;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            outline-color: #8DA399;
+        }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col">
 
-    <!-- Navbar -->
+    <!-- Barre de navigation -->
     <nav class="bg-white border-b border-sand shadow-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
@@ -87,19 +104,64 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
+    <!-- Contenu Principal -->
     <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
 
-        <!-- Intro Section -->
-        <section class="mb-10 text-center max-w-3xl mx-auto">
-            <h2 class="text-3xl font-bold text-stone-dark mb-4">Votre Espace de Révision Stratégique</h2>
-            <p class="text-stone-dark/80 text-lg leading-relaxed">
-                Bienvenue sur votre tableau de bord interactif. Cochez les sessions visionnées pour suivre votre progression par thématique. 
-                Utilisez la répétition pour un meilleur ancrage mémoriel.
-            </p>
+        <!-- Section Identité de l'Apprenant -->
+        <section class="mb-8 bg-white/50 backdrop-blur-sm p-6 rounded-2xl border border-sand shadow-sm">
+            <div class="flex flex-col md:flex-row items-end gap-6">
+                <div class="w-full md:w-1/2">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-stone-dark/60 mb-2">Identité de l'apprenant</label>
+                    <input type="text" id="user-name" placeholder="Votre Nom & Prénom" class="w-full" oninput="saveUserIdentity()">
+                </div>
+                <div class="w-full md:w-1/3">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-stone-dark/60 mb-2">Formation</label>
+                    <select id="user-formation" class="w-full" onchange="saveUserIdentity()">
+                        <option value="">Sélectionner votre formation</option>
+                        <option value="SD (Stratégie Digitale)">SD (Stratégie Digitale)</option>
+                        <option value="CDO (Chief Digital Officer)">CDO (Chief Digital Officer)</option>
+                        <option value="PAIE">PAIE</option>
+                    </select>
+                </div>
+                <div class="w-full md:w-auto">
+                    <div class="bg-sage text-white text-xs font-bold px-4 py-3 rounded-lg text-center whitespace-nowrap">
+                        Profil enregistré 🗸
+                    </div>
+                </div>
+            </div>
         </section>
 
-        <!-- Analytics Section -->
+        <!-- Section Introduction -->
+        <section class="mb-10 text-center max-w-3xl mx-auto">
+            <h2 class="text-3xl font-bold text-stone-dark mb-4">Espace de Révision Stratégique</h2>
+            <p class="text-stone-dark/80 text-lg leading-relaxed mb-6" id="welcome-msg">
+                Bienvenue. Cochez les sessions visionnées pour suivre votre progression. 
+                Vos choix sont <strong>automatiquement sauvegardés</strong> sur ce navigateur.
+            </p>
+            
+            <!-- Bloc Contexte & Information avec effet "Glow" -->
+            <div class="info-glow bg-white rounded-2xl p-6 mb-8 transition-all duration-300">
+                <div class="flex flex-col md:flex-row items-center gap-6 text-left">
+                    <div class="text-4xl shrink-0">🚀</div>
+                    <div>
+                        <h3 class="text-lg font-bold text-stone-dark mb-2">Pourquoi maîtriser l'Anglais IT ?</h3>
+                        <p class="text-stone-dark/80 text-sm leading-relaxed">
+                            Qu'il s'agisse de la <strong>PAIE</strong>, des <strong>RH</strong> ou du <strong>Digital</strong>, l'anglais informatique est omniprésent. Des intitulés de postes aux outils logiciels utilisés quotidiennement, maîtriser ce langage technique est devenu indispensable. Ces cours sur la plateforme <strong>Studi</strong> connectent ces mondes pour booster votre expertise métier (Stratégie Digitale, CDO ou Gestion de Paie). 🌟
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Note Importante sur l'Accès -->
+            <div class="bg-clay/10 border border-clay/20 rounded-xl p-4 flex items-center gap-4 text-left max-w-2xl mx-auto">
+                <span class="text-2xl">🔐</span>
+                <p class="text-stone-dark text-sm font-medium">
+                    <strong class="text-clay uppercase">Attention :</strong> Ces liens de révision sont exclusivement accessibles aux personnes disposant d'un compte actif sur la plateforme de formation Studi.
+                </p>
+            </div>
+        </section>
+
+        <!-- Section Analytique -->
         <section class="mb-12 bg-white rounded-2xl p-6 shadow-sm border border-sand">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                 <div>
@@ -126,168 +188,181 @@
             </div>
         </section>
 
-        <!-- Control Bar -->
+        <!-- Barre de Contrôle -->
         <section class="mb-8 sticky top-20 z-40 bg-cream/90 backdrop-blur-sm p-4 rounded-xl border border-sand shadow-sm">
-            <div class="flex flex-col md:flex-row gap-4 justify-between items-center">
-                <div class="w-full md:w-1/3">
-                    <label for="search" class="sr-only">Rechercher</label>
-                    <div class="relative">
+            <div class="flex flex-col lg:flex-row gap-4 justify-between items-center">
+                <!-- Recherche & Filtres d'état -->
+                <div class="flex flex-col sm:flex-row gap-4 w-full lg:w-2/3">
+                    <div class="relative flex-grow">
                         <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-stone-dark/50">
                             🔍
                         </span>
-                        <input type="text" id="search" class="block w-full pl-10 pr-3 py-2 border border-sand rounded-lg leading-5 bg-white placeholder-stone-dark/40 focus:outline-none focus:ring-2 focus:ring-sage focus:border-sage sm:text-sm transition duration-150 ease-in-out" placeholder="Rechercher (ex: Hardware, Email...)">
+                        <input type="text" id="search" class="block w-full pl-10 pr-3 py-2 border border-sand rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-sage sm:text-sm" placeholder="Rechercher une leçon...">
+                    </div>
+                    
+                    <div class="flex bg-white border border-sand rounded-lg p-1">
+                        <button onclick="setFilter('all')" id="filter-all" class="px-3 py-1 text-xs font-bold rounded-md bg-sage text-white transition-all">Toutes</button>
+                        <button onclick="setFilter('todo')" id="filter-todo" class="px-3 py-1 text-xs font-bold rounded-md text-stone-dark/60 hover:bg-cream transition-all">À faire</button>
+                        <button onclick="setFilter('done')" id="filter-done" class="px-3 py-1 text-xs font-bold rounded-md text-stone-dark/60 hover:bg-cream transition-all">Fait</button>
                     </div>
                 </div>
                 
-                <div class="flex gap-2">
-                   <button id="sort-asc" class="px-4 py-2 bg-white border border-sand rounded-lg text-sm font-medium text-stone-dark hover:bg-sage hover:text-white transition-colors shadow-sm">
+                <div class="flex gap-2 shrink-0">
+                   <button id="sort-asc" class="px-4 py-2 bg-white border border-sand rounded-lg text-sm font-medium text-stone-dark hover:bg-sage hover:text-white transition-colors">
                        Leçon 1 ➔ 21
                    </button>
-                   <button id="sort-desc" class="px-4 py-2 bg-white border border-sand rounded-lg text-sm font-medium text-stone-dark hover:bg-sage hover:text-white transition-colors shadow-sm">
+                   <button id="sort-desc" class="px-4 py-2 bg-white border border-sand rounded-lg text-sm font-medium text-stone-dark hover:bg-sage hover:text-white transition-colors">
                        Leçon 21 ➔ 1
                    </button>
                 </div>
             </div>
         </section>
 
-        <!-- Lessons Grid -->
+        <!-- Grille des Leçons -->
         <section id="lessons-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Cards will be injected here by JS -->
+            <!-- Les cartes sont injectées ici par JS -->
         </section>
 
     </main>
 
-    <!-- Footer -->
+    <!-- Pied de page -->
     <footer class="bg-white border-t border-sand mt-12 py-8">
         <div class="max-w-7xl mx-auto px-4 text-center">
             <div class="flex flex-wrap justify-center gap-6 mb-6">
-                <a href="#" class="flex items-center gap-2 text-stone-dark/70 hover:text-sage transition-colors">
+                <a href="https://chat.whatsapp.com/LHiRDN32feFCEko7VxH5oz" target="_blank" class="flex items-center gap-2 text-stone-dark/70 hover:text-sage transition-colors">
                     <span class="text-lg">💬</span> WhatsApp Stratégie Digital
                 </a>
-                <a href="#" class="flex items-center gap-2 text-stone-dark/70 hover:text-sage transition-colors">
+                <a href="https://chat.whatsapp.com/EtV0ux5ipAG5JDhopzo0ut" target="_blank" class="flex items-center gap-2 text-stone-dark/70 hover:text-sage transition-colors">
                     <span class="text-lg">💰</span> WhatsApp La Paye
                 </a>
-                <a href="#" class="flex items-center gap-2 text-stone-dark/70 hover:text-sage transition-colors">
+                <a href="https://discord.gg/DmKDG5FruF" target="_blank" class="flex items-center gap-2 text-stone-dark/70 hover:text-sage transition-colors">
                     <span class="text-lg">🎮</span> Discord Stratégie Digital
                 </a>
             </div>
-            <p class="text-stone-dark/60 text-sm">Generated for Mathilde Martine PAISLEY's IT English Course Revision.</p>
-            <p class="mt-2 text-stone-dark/40 text-xs italic">Expert : Mathilde Martine PAISLEY | Total des sessions identifiées : 63</p>
+            <p class="text-stone-dark/60 text-sm">Dashboard collaboratif pour les apprenants Studi.</p>
+            <p class="mt-2 text-stone-dark/40 text-xs italic">
+                Total des sessions identifiées : 63<br>
+                <span class="text-clay font-bold uppercase">Accès restreint aux membres de la plateforme Studi.</span>
+            </p>
         </div>
     </footer>
 
-    <!-- JavaScript Application Logic -->
     <script>
-        // --- DATA SOURCE (63 liens avec thématiques d'origine restaurées) ---
+        // --- SOURCE DE DONNÉES ---
         const rawData = [
-            // Thème 01
             { id: 1, date: "17/06/2024", title: "The world of IT", theme: "Introduction et évolution de l'informatique.", link: "https://app.studi.fr/v3/events/70948/stream?type=0" },
             { id: 1, date: "06/09/2024", title: "The world of IT", theme: "Introduction et impact sur nos vies.", link: "https://app.studi.fr/v3/events/71987/stream?type=0" },
             { id: 1, date: "18/02/2025", title: "The world of IT", theme: "Introduction et impact sur nos vies.", link: "https://app.studi.fr/v3/events/83213/stream?type=0" },
             { id: 1, date: "04/09/2025", title: "The world of IT", theme: "Histoire et bases de l'informatique.", link: "https://app.studi.fr/v3/events/92259/stream?type=0" },
             { id: 1, date: "19/02/2026", title: "The world of IT", theme: "Introduction au monde de l'informatique.", link: "https://app.studi.fr/v3/events/101814/stream?type=0" },
-            
-            // Thème 02
             { id: 2, date: "24/06/2024", title: "The first ever computer", theme: "Histoire du premier ordinateur.", link: "https://app.studi.fr/v3/events/70949/stream?type=0" },
             { id: 2, date: "09/09/2024", title: "The first ever computer", theme: "Évolution technique depuis le début.", link: "https://app.studi.fr/v3/events/71988/stream?type=0" },
             { id: 2, date: "25/02/2025", title: "The first ever computer", theme: "Le premier ordinateur et l'évolution.", link: "https://app.studi.fr/v3/events/83215/stream?type=0" },
             { id: 2, date: "11/09/2025", title: "The first ever computer", theme: "Changements de vie au quotidien.", link: "https://app.studi.fr/v3/events/92260/stream?type=0" },
             { id: 2, date: "26/02/2026", title: "The first ever computer", theme: "Impact du premier ordinateur sur nos vies.", link: "https://app.studi.fr/v3/events/101815/stream?type=0" },
-
-            // Thème 03
             { id: 3, date: "Archive 1", title: "Desktop or laptop", theme: "Matériel et composants d'un ordinateur.", link: "https://app.studi.fr/v3/events/71274/stream?type=0" },
             { id: 3, date: "Archive 2", title: "Desktop or laptop", theme: "Matériel et composants d'un ordinateur.", link: "https://app.studi.fr/v3/events/85128/stream?type=0" },
             { id: 3, date: "Archive 3", title: "Desktop or laptop", theme: "Focus sur le hardware et software.", link: "https://app.studi.fr/v3/events/92261/stream?type=0" },
-
-            // Thème 04
             { id: 4, date: "Archive 1", title: "Mac OS, Windows or Linux", theme: "Systèmes d'exploitation.", link: "https://app.studi.fr/v3/events/71275/stream?type=0" },
             { id: 4, date: "Archive 2", title: "Mac OS, Windows or Linux", theme: "Matériel vs Logiciels (Hardware/Software).", link: "https://app.studi.fr/v3/events/71990/stream?type=0" },
             { id: 4, date: "Archive 3", title: "Mac OS, Windows or Linux", theme: "Différence entre hardware et software.", link: "https://app.studi.fr/v3/events/85129/stream?type=0" },
             { id: 4, date: "Archive 4", title: "Mac OS, Windows or Linux", theme: "Systèmes d'exploitation et composants.", link: "https://app.studi.fr/v3/events/92262/stream?type=0" },
-
-            // Thème 05
             { id: 5, date: "Archive 1", title: "Office IT tools", theme: "Logiciels de bureau.", link: "https://app.studi.fr/v3/events/71276/stream?type=0" },
             { id: 5, date: "Archive 2", title: "Office IT tools", theme: "Logiciels en entreprise (Windows/Mac).", link: "https://app.studi.fr/v3/events/71991/stream?type=0" },
             { id: 5, date: "Archive 3", title: "Office IT tools", theme: "Logiciels pour le bon fonctionnement IT.", link: "https://app.studi.fr/v3/events/85130/stream?type=0" },
             { id: 5, date: "Archive 4", title: "Office IT tools", theme: "Outils de bureau et compatibilité.", link: "https://app.studi.fr/v3/events/94101/stream?type=0" },
-
-            // Thème 06
             { id: 6, date: "Archive 1", title: "Troubleshooting", theme: "Vocabulaire technique des pannes.", link: "https://app.studi.fr/v3/events/74771/stream?type=0" },
             { id: 6, date: "Archive 2", title: "Troubleshooting", theme: "Difficultés informatiques et expressions.", link: "https://app.studi.fr/v3/events/85131/stream?type=0" },
             { id: 6, date: "Archive 3", title: "Troubleshooting", theme: "Résolution de problèmes techniques.", link: "https://app.studi.fr/v3/events/94106/stream?type=0" },
-
-            // Thème 07
             { id: 7, date: "Archive 1", title: "You've got mail", theme: "Évolution des emails et communication.", link: "https://app.studi.fr/v3/events/74772/stream?type=0" },
             { id: 7, date: "Archive 2", title: "You've got mail", theme: "Premier email et changements de comm'.", link: "https://app.studi.fr/v3/events/86805/stream?type=0" },
             { id: 7, date: "Archive 3", title: "You've got mail", theme: "Emails pros et personnels.", link: "https://app.studi.fr/v3/events/94111/stream?type=0" },
-
-            // Thème 08
-            { id: 8, date: "Archive 1", title: "Computer's specification", theme: "Mémoire, processeur et disque dur.", link: "https://app.studi.fr/v3/events/75482/stream?type=0" },
-            { id: 8, date: "Archive 2", title: "Computer's specification", theme: "Vocabulaire technique des composants.", link: "https://app.studi.fr/v3/events/94116/stream?type=0" },
-
-            // Thème 09
-            { id: 9, date: "Archive 1", title: "Internet of Things", theme: "Outils internet et révolution au travail.", link: "https://app.studi.fr/v3/events/75496/stream?type=0" },
-            { id: 9, date: "Archive 2", title: "Internet of Things", theme: "L'internet au travail et outils numériques.", link: "https://app.studi.fr/v3/events/86790/stream?type=0" },
-            { id: 9, date: "Archive 3", title: "Internet of Things", theme: "Révolution de l'environnement de travail.", link: "https://app.studi.fr/v3/events/94122/stream?type=0" },
-
-            // Thème 10
-            { id: 10, date: "Archive 1", title: "Surfing on the net", theme: "Internet pour le divertissement.", link: "https://app.studi.fr/v3/events/77464/stream?type=0" },
-            { id: 10, date: "Archive 2", title: "Surfing on the net", theme: "Loisirs en ligne et usages ludiques.", link: "https://app.studi.fr/v3/events/86791/stream?type=0" },
-            { id: 10, date: "Archive 3", title: "Surfing on the net", theme: "Activités en ligne pour niveau A2/B1.", link: "https://app.studi.fr/v3/events/96009/stream?type=0" },
-
-            // Thème 12
-            { id: 12, date: "Archive", title: "Mobile Internet", theme: "Smartphones (Apple, Android, Windows).", link: "https://app.studi.fr/v3/events/79146/stream?type=0" },
-
-            // Thème 13
-            { id: 13, date: "Archive 1", title: "Mr X wants to connect", theme: "Réseaux sociaux et communication.", link: "https://app.studi.fr/v3/events/67546/stream?type=0" },
-            { id: 13, date: "Archive 2", title: "Mr X wants to connect", theme: "Réseaux sociaux et liens entre proches.", link: "https://app.studi.fr/v3/events/77973/stream?type=0" },
-            { id: 13, date: "Archive 3", title: "Mr X wants to connect", theme: "Réseaux sociaux vs lettres postales.", link: "https://app.studi.fr/v3/events/96019/stream?type=0" },
-
-            // Thème 14
-            { id: 14, date: "Archive 1", title: "E-games", theme: "Concept de l'e-gaming.", link: "https://app.studi.fr/v3/events/67690/stream?type=0" },
-            { id: 14, date: "Archive 2", title: "E-games", theme: "Concept de l'e-gaming et accessibilité.", link: "https://app.studi.fr/v3/events/77974/stream?type=0" },
-            { id: 14, date: "Archive 3", title: "E-games", theme: "Popularité du jeu vidéo et haut débit.", link: "https://app.studi.fr/v3/events/88866/stream?type=0" },
-            { id: 14, date: "Archive 4", title: "E-games", theme: "Expériences de jeu en ligne.", link: "https://app.studi.fr/v3/events/96024/stream?type=0" },
-
-            // Thème 15
-            { id: 15, date: "29/04/2024", title: "Cyber crime", theme: "Introduction à la cybercriminalité.", link: "https://app.studi.fr/v3/events/67706/stream?type=0" },
-            { id: 15, date: "03/12/2024", title: "Cyber crime", theme: "Introduction et vocabulaire des risques.", link: "https://app.studi.fr/v3/events/79132/stream?type=0" },
-            { id: 15, date: "12/06/2025", title: "Cyber crime", theme: "Victimes de cybercriminalité.", link: "https://app.studi.fr/v3/events/88867/stream?type=0" },
-            { id: 15, date: "04/12/2025", title: "Cyber crime", theme: "Expressions clés sur la criminalité web.", link: "https://app.studi.fr/v3/events/98258/stream?type=0" },
-
-            // Thème 16
+            { id: 8, date: "Archive 1", title: "Computer's specification", theme: "Spécifications techniques.", link: "https://app.studi.fr/v3/events/75482/stream?type=0" },
+            { id: 8, date: "Archive 2", title: "Computer's specification", theme: "Vocabulaire composants.", link: "https://app.studi.fr/v3/events/94116/stream?type=0" },
+            { id: 9, date: "Archive 1", title: "Internet of Things", theme: "Objets connectés.", link: "https://app.studi.fr/v3/events/75496/stream?type=0" },
+            { id: 9, date: "Archive 2", title: "Internet of Things", theme: "L'internet au travail.", link: "https://app.studi.fr/v3/events/86790/stream?type=0" },
+            { id: 9, date: "Archive 3", title: "Internet of Things", theme: "Révolution numérique.", link: "https://app.studi.fr/v3/events/94122/stream?type=0" },
+            { id: 10, date: "Archive 1", title: "Surfing on the net", theme: "Naviguer sur le web.", link: "https://app.studi.fr/v3/events/77464/stream?type=0" },
+            { id: 10, date: "Archive 2", title: "Surfing on the net", theme: "Loisirs en ligne.", link: "https://app.studi.fr/v3/events/86791/stream?type=0" },
+            { id: 10, date: "Archive 3", title: "Surfing on the net", theme: "Activités web.", link: "https://app.studi.fr/v3/events/96009/stream?type=0" },
+            { id: 12, date: "Archive", title: "Mobile Internet", theme: "Internet mobile.", link: "https://app.studi.fr/v3/events/79146/stream?type=0" },
+            { id: 13, date: "Archive 1", title: "Mr X wants to connect", theme: "Réseaux sociaux.", link: "https://app.studi.fr/v3/events/67546/stream?type=0" },
+            { id: 13, date: "Archive 2", title: "Mr X wants to connect", theme: "Liens sociaux.", link: "https://app.studi.fr/v3/events/77973/stream?type=0" },
+            { id: 13, date: "Archive 3", title: "Mr X wants to connect", theme: "Communication moderne.", link: "https://app.studi.fr/v3/events/96019/stream?type=0" },
+            { id: 14, date: "Archive 1", title: "E-games", theme: "Le monde du gaming.", link: "https://app.studi.fr/v3/events/67690/stream?type=0" },
+            { id: 14, date: "Archive 2", title: "E-games", theme: "E-gaming et accessibilité.", link: "https://app.studi.fr/v3/events/77974/stream?type=0" },
+            { id: 14, date: "Archive 3", title: "E-games", theme: "Popularité du jeu vidéo.", link: "https://app.studi.fr/v3/events/88866/stream?type=0" },
+            { id: 14, date: "Archive 4", title: "E-games", theme: "Expériences de jeu.", link: "https://app.studi.fr/v3/events/96024/stream?type=0" },
+            { id: 15, date: "29/04/2024", title: "Cyber crime", theme: "Introduction cybercriminalité.", link: "https://app.studi.fr/v3/events/67706/stream?type=0" },
+            { id: 15, date: "03/12/2024", title: "Cyber crime", theme: "Risques et menaces.", link: "https://app.studi.fr/v3/events/79132/stream?type=0" },
+            { id: 15, date: "12/06/2025", title: "Cyber crime", theme: "Victimes cybercrime.", link: "https://app.studi.fr/v3/events/88867/stream?type=0" },
+            { id: 15, date: "04/12/2025", title: "Cyber crime", theme: "Expressions clés.", link: "https://app.studi.fr/v3/events/98258/stream?type=0" },
             { id: 16, date: "Archive 1", title: "Online shopping", theme: "Achats en ligne.", link: "https://app.studi.fr/v3/events/69166/stream?type=0" },
-            { id: 16, date: "Archive 2", title: "Online shopping", theme: "Achats en ligne vs boutiques physiques.", link: "https://app.studi.fr/v3/events/79133/stream?type=0" },
-            { id: 16, date: "Archive 3", title: "Online shopping", theme: "Vocabulaire associé au e-commerce.", link: "https://app.studi.fr/v3/events/88868/stream?type=0" },
-            { id: 16, date: "Archive 4", title: "Online shopping", theme: "Préférences d'achat et vocabulaire.", link: "https://app.studi.fr/v3/events/100188/stream?type=0" },
-
-            // Thème 17
-            { id: 17, date: "Archive 1", title: "Big Tech companies", theme: "Géants de la technologie.", link: "https://app.studi.fr/v3/events/69168/stream?type=0" },
-            { id: 17, date: "Archive 2", title: "Big Tech companies", theme: "GAFAM, produits et services associés.", link: "https://app.studi.fr/v3/events/81415/stream?type=0" },
-            { id: 17, date: "Archive 3", title: "Big Tech companies", theme: "Aspirations professionnelles et géants tech.", link: "https://app.studi.fr/v3/events/100190/stream?type=0" },
-
-            // Thème 18
-            { id: 18, date: "Archive 1", title: "How to connect", theme: "Connexion réseau et entreprises.", link: "https://app.studi.fr/v3/events/69633/stream?type=0" },
-            { id: 18, date: "Archive 2", title: "How to connect", theme: "Internet pour les entreprises (tendances).", link: "https://app.studi.fr/v3/events/81417/stream?type=0" },
-            { id: 18, date: "Archive 3", title: "How to connect", theme: "Croissance du online et connectivité.", link: "https://app.studi.fr/v3/events/100191/stream?type=0" },
-
-            // Thème 19
-            { id: 19, date: "Archive 1", title: "The IT department", theme: "Le département informatique.", link: "https://app.studi.fr/v3/events/69635/stream?type=0" },
-            { id: 19, date: "Archive 2", title: "The IT department", theme: "Hiérarchie et importance du service IT.", link: "https://app.studi.fr/v3/events/81418/stream?type=0" },
-            { id: 19, date: "Archive 3", title: "The IT department", theme: "Rôle crucial du département informatique.", link: "https://app.studi.fr/v3/events/100192/stream?type=0" },
-
-            // Thème 20
-            { id: 20, date: "Archive 1", title: "Viruses and Malwares", theme: "Virus et programmes malveillants.", link: "https://app.studi.fr/v3/events/70389/stream?type=0" },
-            { id: 20, date: "Archive 2", title: "Viruses and Malwares", theme: "Programmes malveillants et protection.", link: "https://app.studi.fr/v3/events/81425/stream?type=0" },
-
-            // Thème 21
-            { id: 21, date: "Archive", title: "Cyber security", theme: "Réduction des risques et sécurité.", link: "https://app.studi.fr/v3/events/83211/stream?type=0" }
+            { id: 16, date: "Archive 2", title: "Online shopping", theme: "E-commerce.", link: "https://app.studi.fr/v3/events/79133/stream?type=0" },
+            { id: 16, date: "Archive 3", title: "Online shopping", theme: "Vocabulaire shopping.", link: "https://app.studi.fr/v3/events/88868/stream?type=0" },
+            { id: 16, date: "Archive 4", title: "Online shopping", theme: "Préférences d'achat.", link: "https://app.studi.fr/v3/events/100188/stream?type=0" },
+            { id: 17, date: "Archive 1", title: "Big Tech companies", theme: "Géants Tech.", link: "https://app.studi.fr/v3/events/69168/stream?type=0" },
+            { id: 17, date: "Archive 2", title: "Big Tech companies", theme: "GAFAM.", link: "https://app.studi.fr/v3/events/81415/stream?type=0" },
+            { id: 17, date: "Archive 3", title: "Big Tech companies", theme: "Aspirations pro.", link: "https://app.studi.fr/v3/events/100190/stream?type=0" },
+            { id: 18, date: "Archive 1", title: "How to connect", theme: "Connectivité entreprises.", link: "https://app.studi.fr/v3/events/69633/stream?type=0" },
+            { id: 18, date: "Archive 2", title: "How to connect", theme: "Réseaux d'entreprise.", link: "https://app.studi.fr/v3/events/81417/stream?type=0" },
+            { id: 18, date: "Archive 3", title: "How to connect", theme: "Croissance online.", link: "https://app.studi.fr/v3/events/100191/stream?type=0" },
+            { id: 19, date: "Archive 1", title: "The IT department", theme: "Département informatique.", link: "https://app.studi.fr/v3/events/69635/stream?type=0" },
+            { id: 19, date: "Archive 2", title: "The IT department", theme: "Hiérarchie IT.", link: "https://app.studi.fr/v3/events/81418/stream?type=0" },
+            { id: 19, date: "Archive 3", title: "The IT department", theme: "Rôle crucial IT.", link: "https://app.studi.fr/v3/events/100192/stream?type=0" },
+            { id: 20, date: "Archive 1", title: "Viruses and Malwares", theme: "Menaces virales.", link: "https://app.studi.fr/v3/events/70389/stream?type=0" },
+            { id: 20, date: "Archive 2", title: "Viruses and Malwares", theme: "Protection malware.", link: "https://app.studi.fr/v3/events/81425/stream?type=0" },
+            { id: 21, date: "Archive", title: "Cyber security", theme: "Sécurité informatique globale.", link: "https://app.studi.fr/v3/events/83211/stream?type=0" }
         ];
 
-        // --- STATE & PROCESSING ---
+        // --- ÉTAT & STOCKAGE ---
         let lessons = [];
         let watchedSessions = new Set();
-        
+        let currentFilter = 'all';
+
+        // Charger l'identité et les progrès depuis le localStorage
+        function loadSavedData() {
+            const savedProgress = localStorage.getItem('it_english_progress');
+            if (savedProgress) {
+                watchedSessions = new Set(JSON.parse(savedProgress));
+            }
+            
+            const savedName = localStorage.getItem('it_english_user_name');
+            const savedFormation = localStorage.getItem('it_english_user_formation');
+            if (savedName) document.getElementById('user-name').value = savedName;
+            if (savedFormation) document.getElementById('user-formation').value = savedFormation;
+            
+            updateWelcomeMessage();
+        }
+
+        // Sauvegarder les progrès
+        function saveProgress() {
+            localStorage.setItem('it_english_progress', JSON.stringify(Array.from(watchedSessions)));
+        }
+
+        // Sauvegarder l'identité
+        function saveUserIdentity() {
+            const name = document.getElementById('user-name').value;
+            const formation = document.getElementById('user-formation').value;
+            localStorage.setItem('it_english_user_name', name);
+            localStorage.setItem('it_english_user_formation', formation);
+            updateWelcomeMessage();
+        }
+
+        function updateWelcomeMessage() {
+            const name = document.getElementById('user-name').value;
+            const formation = document.getElementById('user-formation').value;
+            const msgEl = document.getElementById('welcome-msg');
+            
+            if (name && formation) {
+                msgEl.innerHTML = `Bonjour <strong>${name}</strong> de la formation <strong>${formation}</strong>. Cochez les sessions visionnées pour suivre votre progression. Vos choix sont sauvegardés automatiquement.`;
+            } else if (name) {
+                msgEl.innerHTML = `Bonjour <strong>${name}</strong>. Veuillez sélectionner votre formation pour personnaliser votre espace. Vos choix sont sauvegardés automatiquement.`;
+            } else {
+                msgEl.innerHTML = `Bienvenue. Veuillez saisir votre identité pour personnaliser ce tableau de bord. Vos choix sont sauvegardés automatiquement.`;
+            }
+        }
+
         function processData() {
             const grouped = {};
             rawData.forEach(item => {
@@ -296,19 +371,22 @@
                 }
                 grouped[item.id].sessions.push({
                     ...item,
-                    sessionId: `${item.id}-${item.date.replace(/\s+/g, '-')}-${Math.random().toString(36).substr(2, 5)}`
+                    sessionId: `${item.id}-${item.date.replace(/\s+/g, '-')}`
                 });
             });
             lessons = Object.values(grouped).sort((a, b) => a.id - b.id);
         }
 
-        // --- PROGRESS LOGIC ---
         function toggleSession(sessionId) {
             if (watchedSessions.has(sessionId)) { watchedSessions.delete(sessionId); } 
             else { watchedSessions.add(sessionId); }
+            saveProgress();
             updateStats();
             const lessonId = sessionId.split('-')[0];
             updateCardProgress(parseInt(lessonId));
+            
+            const label = document.querySelector(`label[for="cb-${sessionId}"]`);
+            if(label) label.classList.toggle('session-done', watchedSessions.has(sessionId));
         }
 
         function updateCardProgress(lessonId) {
@@ -323,7 +401,22 @@
             if (text) text.textContent = `${percent}%`;
         }
 
-        // --- RENDER FUNCTIONS ---
+        function setFilter(filter) {
+            currentFilter = filter;
+            ['all', 'todo', 'done'].forEach(f => {
+                const btn = document.getElementById(`filter-${f}`);
+                if(f === filter) {
+                    btn.classList.add('bg-sage', 'text-white');
+                    btn.classList.remove('text-stone-dark/60');
+                } else {
+                    btn.classList.remove('bg-sage', 'text-white');
+                    btn.classList.add('text-stone-dark/60');
+                }
+            });
+            renderGrid(lessons);
+        }
+
+        // --- RENDU ---
         function updateStats() {
             document.getElementById('total-sessions').textContent = rawData.length;
             document.getElementById('unique-topics').textContent = lessons.length;
@@ -342,7 +435,6 @@
                         label: 'Vidéos',
                         data: sortedByCount.map(l => l.sessions.length),
                         backgroundColor: '#8DA399',
-                        hoverBackgroundColor: '#C27B7F',
                         borderRadius: 4
                     }]
                 },
@@ -362,13 +454,13 @@
             const isWatched = watchedSessions.has(session.sessionId);
             return `
                 <li class="flex items-start gap-3 py-2 border-b border-sand last:border-0 group">
-                    <input type="checkbox" class="custom-checkbox mt-1" ${isWatched ? 'checked' : ''} onchange="toggleSession('${session.sessionId}')">
-                    <div class="flex-1">
+                    <input type="checkbox" id="cb-${session.sessionId}" class="custom-checkbox mt-1" ${isWatched ? 'checked' : ''} onchange="toggleSession('${session.sessionId}')">
+                    <label for="cb-${session.sessionId}" class="flex-1 cursor-pointer ${isWatched ? 'session-done' : ''}">
                         <div class="flex items-center gap-2 mb-1">
-                            <span class="text-xs font-mono bg-cream px-2 py-0.5 rounded border border-sand text-stone-dark/70">${session.date}</span>
+                            <span class="text-[10px] font-mono bg-cream px-1.5 py-0.5 rounded border border-sand text-stone-dark/70">${session.date}</span>
                         </div>
                         <p class="text-sm text-stone-dark leading-tight">${session.theme}</p>
-                    </div>
+                    </label>
                     <a href="${session.link}" target="_blank" class="ml-1 p-1.5 rounded hover:bg-cream transition-colors text-sage hover:text-clay font-medium underline">
                         ▶️
                     </a>
@@ -379,11 +471,20 @@
         function renderGrid(dataToRender) {
             const container = document.getElementById('lessons-grid');
             container.innerHTML = '';
-            dataToRender.forEach(lesson => {
+            
+            let filteredData = dataToRender;
+            if(currentFilter === 'todo') {
+                filteredData = dataToRender.filter(l => l.sessions.some(s => !watchedSessions.has(s.sessionId)));
+            } else if(currentFilter === 'done') {
+                filteredData = dataToRender.filter(l => l.sessions.every(s => watchedSessions.has(s.sessionId)));
+            }
+
+            filteredData.forEach(lesson => {
                 const total = lesson.sessions.length;
                 const watched = lesson.sessions.filter(s => watchedSessions.has(s.sessionId)).length;
                 const percent = Math.round((watched / total) * 100);
                 const sessionsHTML = lesson.sessions.map(createSessionItem).join('');
+                
                 const card = document.createElement('div');
                 card.className = 'bg-white rounded-xl border border-sand p-5 shadow-sm card-hover flex flex-col h-full transition-all duration-300';
                 card.innerHTML = `
@@ -412,6 +513,7 @@
 
         function init() {
             processData();
+            loadSavedData();
             updateStats();
             renderChart();
             renderGrid(lessons);
